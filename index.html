@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FreeBodyStrategy.com - Gamified Business Analysis</title>
+  <!-- Include Google Fonts and Bootstrap CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Roboto&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    integrity="sha384-ENjdO4Dr2bkBIFxQpeoHfFw83+7KRIQgj8VT1pZ9tWmEg4GYgFkBKaW7CR7S5FYh"
+    crossorigin="anonymous"
+  />
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #1f2a44;
+      color: #fff;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.5rem;
+      margin: 0;
+    }
+    header nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-right: 1rem;
+    }
+    .hero {
+      background: url('https://images.unsplash.com/photo-1610375751712-ecd67eced6ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=1567&q=80')
+        no-repeat center center / cover;
+      color: #fff;
+      text-align: center;
+      padding: 5rem 2rem;
+      position: relative;
+    }
+    .hero-overlay {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: rgba(31, 42, 68, 0.7);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero h2 {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+    }
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 2rem auto;
+    }
+    .btn-cta {
+      background-color: #3c8dad;
+      color: #fff;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      font-weight: 700;
+      border-radius: 4px;
+      text-decoration: none;
+      transition: background 0.3s ease;
+    }
+    .btn-cta:hover {
+      background-color: #16708b;
+    }
+    .section-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 700;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    /* Features section */
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem auto;
+      max-width: 1000px;
+    }
+    .feature-box {
+      background-color: #fff;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 1.5rem;
+      width: 300px;
+      text-align: center;
+    }
+    .feature-box h4 {
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 1rem;
+    }
+    /* Diagram section */
+    #diagram-section {
+      background-color: #fff;
+      margin: 2rem auto;
+      max-width: 1200px;
+      padding: 2rem;
+      border-radius: 8px;
+      border: 1px solid #eee;
+    }
+    #diagramContainer {
+      position: relative;
+      width: 100%;
+      height: 500px;
+      border: 2px dashed #ccc;
+      margin-top: 1rem;
+      overflow: hidden;
+    }
+    .force-arrow {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #3c8dad;
+      color: #fff;
+      border-radius: 50%;
+      cursor: grab;
+      user-select: none;
+      font-size: 0.8rem;
+      font-weight: 700;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      /* Default size (will be updated based on intensity) */
+      width: 40px;
+      height: 40px;
+    }
+    .force-arrow:active {
+      cursor: grabbing;
+    }
+    /* Points and Calculation section */
+    .points-container {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin: 2rem auto;
+      max-width: 800px;
+    }
+    .points-box {
+      background-color: #fff;
+      border: 1px solid #eee;
+      padding: 1rem;
+      border-radius: 8px;
+      text-align: center;
+      flex: 1;
+    }
+    .points-box h5 {
+      font-family: 'Montserrat', sans-serif;
+      margin-bottom: 0.5rem;
+    }
+    .calculate-btn {
+      margin-top: 1rem;
+      background-color: #1f2a44;
+      color: #fff;
+      border: none;
+      padding: 0.8rem 1.2rem;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    /* Footer */
+    footer {
+      background-color: #1f2a44;
+      color: #fff;
+      padding: 1rem 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      margin-top: 2rem;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER / NAVIGATION -->
+  <header>
+    <h1>FreeBodyStrategy.com</h1>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#diagram-section">Diagram</a>
+      <a href="#">Pricing</a>
+      <a href="#">Login</a>
+    </nav>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h2>Apply the Laws of Motion to Move Your Business Forward</h2>
+      <p>
+        Analyze your business challenges by mapping external forces (Y axis) and interior forces (X axis) with intensity – and see your strategic direction emerge.
+      </p>
+      <a href="#diagram-section" class="btn-cta">Get Started</a>
+    </div>
+  </section>
+
+  <!-- FEATURES / HOW IT WORKS -->
+  <section id="features">
+    <h2 class="section-title">How It Works</h2>
+    <div class="features">
+      <div class="feature-box">
+        <h4>1. Identify Forces</h4>
+        <p>
+          Recognize external forces (market trends, competition) and interior forces (resources, culture) affecting your business.
+        </p>
+      </div>
+      <div class="feature-box">
+        <h4>2. Assign Intensities</h4>
+        <p>
+          Specify the intensity of each force on a scale of 1–10. The strength of each force will contribute to your overall strategy.
+        </p>
+      </div>
+      <div class="feature-box">
+        <h4>3. Calculate Net Force</h4>
+        <p>
+          Process your forces to compute a net directional “force” – inspired by Newton’s second law – and earn points along the way.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIAGRAM SECTION -->
+  <section id="diagram-section">
+    <h2 class="section-title">Free-Body Diagram</h2>
+    <p class="text-center">
+      Add and drag force arrows to represent different strategic pressures on your business.
+      When ready, click “Calculate Net Force” to process your efforts.
+    </p>
+    <div class="text-center">
+      <button class="btn btn-primary" onclick="addForce()">+ Add Force</button>
+    </div>
+    <div id="diagramContainer"></div>
+  </section>
+
+  <!-- POINTS / CALCULATION SECTION -->
+  <div class="points-container">
+    <div class="points-box">
+      <h5>Total Points</h5>
+      <div id="pointsDisplay">0</div>
+    </div>
+    <div class="points-box">
+      <h5>Badges</h5>
+      <div id="badgesDisplay">No badges yet</div>
+    </div>
+    <div class="points-box">
+      <h5>Net Force</h5>
+      <div id="netForceDisplay">0, 0</div>
+      <button class="calculate-btn" onclick="calculateNetForce()">Calculate Net Force</button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    &copy; <span id="year"></span> FreeBodyStrategy.com - All Rights Reserved
+  </footer>
+
+  <!-- JAVASCRIPT -->
+  <script>
+    // Global variables
+    const forces = []; // Array to hold force objects
+    let totalPoints = 0;
+    let forceCount = 0;
+
+    // Update the points display
+    function updatePointsDisplay() {
+      document.getElementById('pointsDisplay').textContent = totalPoints;
+    }
+
+    // Update badges based on how many forces have been added
+    function updateBadges() {
+      let badgeText = 'No badges yet';
+      if (forces.length >= 5 && forces.length < 10) {
+        badgeText = 'Force Finder Badge';
+      } else if (forces.length >= 10) {
+        badgeText = 'Vector Visionary Badge';
+      }
+      document.getElementById('badgesDisplay').textContent = badgeText;
+    }
+
+    // Add a new force (with type and intensity)
+    function addForce() {
+      // Increase points for adding a force
+      totalPoints += 10;
+      updatePointsDisplay();
+
+      // Prompt user for force type and intensity
+      let forceType = prompt("Enter force type: interior (X axis) or exterior (Y axis):", "interior");
+      if (!forceType || (forceType.toLowerCase() !== "interior" && forceType.toLowerCase() !== "exterior")) {
+        forceType = "interior";
+      } else {
+        forceType = forceType.toLowerCase();
+      }
+      let intensity = prompt("Enter force intensity (1 to 10):", "5");
+      intensity = parseInt(intensity);
+      if (isNaN(intensity) || intensity < 1 || intensity > 10) {
+        intensity = 5;
+      }
+
+      // Increase force count and create a new label
+      forceCount++;
+      const label = "F" + forceCount + (forceType === "interior" ? " (X)" : " (Y)");
+
+      // Determine arrow size based on intensity (for visual impact)
+      const size = 30 + intensity * 2; // e.g., 32px to 50px
+
+      // Create the arrow element
+      const diagramContainer = document.getElementById('diagramContainer');
+      const arrow = document.createElement('div');
+      arrow.className = 'force-arrow';
+      arrow.textContent = label;
+      arrow.style.width = size + 'px';
+      arrow.style.height = size + 'px';
+
+      // Position arrow randomly within the container
+      arrow.style.left = Math.floor(Math.random() * (diagramContainer.offsetWidth - size)) + 'px';
+      arrow.style.top = Math.floor(Math.random() * (diagramContainer.offsetHeight - size)) + 'px';
+
+      // Create a force object to store data
+      const forceData = {
+        el: arrow,
+        type: forceType,      // "interior" or "exterior"
+        intensity: intensity, // user-specified intensity (1–10)
+        x: parseInt(arrow.style.left),
+        y: parseInt(arrow.style.top)
+      };
+      forces.push(forceData);
+
+      // Make the arrow draggable
+      makeDraggable(arrow, forceData);
+      diagramContainer.appendChild(arrow);
+      updateBadges();
+    }
+
+    // Basic draggable functionality
+    function makeDraggable(element, forceData) {
+      let offsetX, offsetY;
+      let isDragging = false;
+      element.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        offsetX = e.clientX - forceData.x;
+        offsetY = e.clientY - forceData.y;
+        element.style.cursor = 'grabbing';
+      });
+      document.addEventListener('mousemove', (e) => {
+        if (isDragging) {
+          let newX = e.clientX - offsetX;
+          let newY = e.clientY - offsetY;
+          // Constrain movement within the container
+          const container = document.getElementById('diagramContainer');
+          const maxX = container.offsetWidth - element.offsetWidth;
+          const maxY = container.offsetHeight - element.offsetHeight;
+          if (newX < 0) newX = 0;
+          if (newY < 0) newY = 0;
+          if (newX > maxX) newX = maxX;
+          if (newY > maxY) newY = maxY;
+          forceData.x = newX;
+          forceData.y = newY;
+          element.style.left = newX + 'px';
+          element.style.top = newY + 'px';
+        }
+      });
+      document.addEventListener('mouseup', () => {
+        isDragging = false;
+        element.style.cursor = 'grab';
+      });
+    }
+
+    // Calculate the net force based on each force’s type, intensity, and position
+    function calculateNetForce() {
+      // Get the container's center coordinates
+      const container = document.getElementById('diagramContainer');
+      const centerX = container.offsetWidth / 2;
+      const centerY = container.offsetHeight / 2;
+
+      let netInterior = 0; // Sum for interior (X axis) forces
+      let netExterior = 0; // Sum for exterior (Y axis) forces
+
+      forces.forEach((f) => {
+        // Calculate the arrow's center position
+        const arrowCenterX = f.x + f.el.offsetWidth / 2;
+        const arrowCenterY = f.y + f.el.offsetHeight / 2;
+        if (f.type === "interior") {
+          // If arrow is right of center, count as positive; left, negative.
+          netInterior += (arrowCenterX >= centerX ? f.intensity : -f.intensity);
+        } else if (f.type === "exterior") {
+          // If arrow is below center, count as positive; above, negative.
+          netExterior += (arrowCenterY >= centerY ? f.intensity : -f.intensity);
+        }
+      });
+
+      // Display the net force as an (X, Y) pair
+      document.getElementById('netForceDisplay').textContent = netInterior + ", " + netExterior;
+
+      // Reward points for processing the forces
+      totalPoints += 5;
+      updatePointsDisplay();
+    }
+
+    // Set the current year in the footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
+
+  <!-- Optionally load Bootstrap JS -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-pp6RktpMAlbaPxDqFCvNcGyk0Ew0uFf/nlR+0i2evkPTfty2Kwh9JkW3pTVDcnR1"
+    crossorigin="anonymous"
+  ></script>
+</body>
+</html>
