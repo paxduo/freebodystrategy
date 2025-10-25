@@ -17,19 +17,28 @@
     crossorigin="anonymous"
   />
   <style>
+    :root {
+      --navy: #1f2a44;
+      --accent-red: #e63946;
+      --accent-red-dark: #bb2433;
+      --accent-rose: #fce6e9;
+      --soft-slate: #44536f;
+    }
     body {
       font-family: 'Roboto', sans-serif;
       background-color: #f7f7f7;
       margin: 0;
       padding: 0;
+      color: var(--navy);
     }
     header {
-      background-color: #1f2a44;
+      background: linear-gradient(135deg, var(--navy), var(--accent-red-dark));
       color: #fff;
       padding: 1rem 2rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      box-shadow: 0 10px 30px rgba(31, 42, 68, 0.3);
     }
     header h1 {
       font-family: 'Montserrat', sans-serif;
@@ -40,6 +49,24 @@
       color: #fff;
       text-decoration: none;
       margin-right: 1rem;
+      font-weight: 600;
+      position: relative;
+    }
+    header nav a::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.45);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease;
+    }
+    header nav a:hover::after,
+    header nav a:focus-visible::after {
+      transform: scaleX(1);
     }
     .hero {
       background: url('https://images.unsplash.com/photo-1610375751712-ecd67eced6ac?ixlib=rb-4.0.3&auto=format&fit=crop&w=1567&q=80')
@@ -55,7 +82,7 @@
       bottom: 0;
       right: 0;
       left: 0;
-      background: rgba(31, 42, 68, 0.7);
+      background: linear-gradient(135deg, rgba(230, 57, 70, 0.82), rgba(31, 42, 68, 0.82));
     }
     .hero-content {
       position: relative;
@@ -72,17 +99,58 @@
       margin: 0 auto 2rem auto;
     }
     .btn-cta {
-      background-color: #3c8dad;
+      background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
       color: #fff;
       padding: 0.8rem 1.5rem;
       border: none;
       font-weight: 700;
-      border-radius: 4px;
+      border-radius: 999px;
       text-decoration: none;
-      transition: background 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 18px 30px rgba(230, 57, 70, 0.35);
     }
     .btn-cta:hover {
-      background-color: #16708b;
+      transform: translateY(-2px);
+      box-shadow: 0 20px 34px rgba(230, 57, 70, 0.4);
+    }
+    .btn-gradient-red {
+      background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
+      border: none;
+      color: #fff;
+      font-weight: 700;
+      box-shadow: 0 14px 24px rgba(230, 57, 70, 0.28);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-gradient-red:hover,
+    .btn-gradient-red:focus-visible {
+      transform: translateY(-1px);
+      box-shadow: 0 18px 30px rgba(230, 57, 70, 0.34);
+      color: #fff;
+    }
+    .btn-outline-crimson {
+      border: 1px solid rgba(230, 57, 70, 0.6);
+      color: var(--accent-red);
+      background: transparent;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .btn-outline-crimson:hover,
+    .btn-outline-crimson:focus-visible {
+      background: var(--accent-red);
+      color: #fff;
+      box-shadow: 0 12px 24px rgba(230, 57, 70, 0.22);
+    }
+    .btn-soft-slate {
+      border: 1px solid rgba(68, 83, 111, 0.25);
+      color: var(--soft-slate);
+      background: rgba(68, 83, 111, 0.08);
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+    .btn-soft-slate:hover,
+    .btn-soft-slate:focus-visible {
+      background: rgba(68, 83, 111, 0.18);
+      color: var(--navy);
     }
     .section-title {
       font-family: 'Montserrat', sans-serif;
@@ -90,8 +158,29 @@
       margin-top: 2rem;
       margin-bottom: 1rem;
       text-align: center;
+      color: var(--navy);
+      display: inline-block;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      padding-bottom: 0.4rem;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(230, 57, 70, 0.8), rgba(255, 255, 255, 0));
     }
     /* Features section */
+    #features {
+      padding-bottom: 3rem;
+      background: linear-gradient(180deg, rgba(252, 230, 233, 0.25), rgba(255, 255, 255, 0));
+    }
     .features {
       display: flex;
       flex-wrap: wrap;
@@ -102,52 +191,186 @@
     }
     .feature-box {
       background-color: #fff;
-      border: 1px solid #eee;
+      border: 1px solid rgba(230, 57, 70, 0.15);
       border-radius: 8px;
       padding: 1.5rem;
       width: 300px;
       text-align: center;
+      box-shadow: 0 14px 28px rgba(230, 57, 70, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    .feature-box::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(230, 57, 70, 0.08), rgba(255, 255, 255, 0));
+      pointer-events: none;
     }
     .feature-box h4 {
       font-family: 'Montserrat', sans-serif;
       margin-bottom: 1rem;
+      color: var(--accent-red-dark);
     }
     /* Diagram section */
     #diagram-section {
-      background-color: #fff;
+      background: linear-gradient(145deg, #ffffff, rgba(252, 230, 233, 0.55));
       margin: 2rem auto;
       max-width: 1200px;
       padding: 2rem;
-      border-radius: 8px;
-      border: 1px solid #eee;
+      border-radius: 12px;
+      border: 1px solid rgba(230, 57, 70, 0.12);
+      box-shadow: 0 20px 45px rgba(230, 57, 70, 0.12);
+    }
+    #diagram-section p {
+      color: var(--soft-slate);
+    }
+    .diagram-layout {
+      display: grid;
+      grid-template-columns: minmax(280px, 320px) 1fr;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    @media (max-width: 992px) {
+      .diagram-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+    .control-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .card.shadow-sm {
+      border: 1px solid rgba(230, 57, 70, 0.16);
+      border-radius: 16px;
+      box-shadow: 0 18px 34px rgba(31, 42, 68, 0.08) !important;
+    }
+    .card.shadow-sm .card-body {
+      border-radius: 14px;
+    }
+    .control-panel .panel-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      color: var(--accent-red-dark);
+    }
+    .diagram-area {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .diagram-toolbar {
+      background: linear-gradient(135deg, rgba(230, 57, 70, 0.12), rgba(31, 42, 68, 0.06));
+      border: 1px solid rgba(230, 57, 70, 0.2);
+      border-radius: 16px;
+      padding: 1.1rem 1.2rem;
+      color: var(--navy);
+      font-size: 0.95rem;
+      line-height: 1.5;
+      box-shadow: 0 16px 30px rgba(230, 57, 70, 0.12);
+    }
+    .diagram-toolbar strong {
+      font-weight: 700;
+      color: var(--accent-red-dark);
     }
     #diagramContainer {
       position: relative;
       width: 100%;
-      height: 500px;
-      border: 2px dashed #ccc;
-      margin-top: 1rem;
+      height: 520px;
+      border-radius: 18px;
+      border: 1px solid rgba(230, 57, 70, 0.22);
+      background: radial-gradient(circle at center, rgba(230, 57, 70, 0.16) 0%, rgba(252, 230, 233, 0.45) 45%, rgba(255, 255, 255, 0.8) 100%);
+      box-shadow: inset 0 0 0 1px rgba(230, 57, 70, 0.12);
       overflow: hidden;
+      margin-top: 0.5rem;
+    }
+    #diagramContainer::before,
+    #diagramContainer::after {
+      content: '';
+      position: absolute;
+      background: rgba(230, 57, 70, 0.28);
+      z-index: 1;
+      pointer-events: none;
+    }
+    #diagramContainer::before {
+      width: 2px;
+      height: 100%;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+    }
+    #diagramContainer::after {
+      height: 2px;
+      width: 100%;
+      top: 50%;
+      left: 0;
+      transform: translateY(-50%);
+    }
+    #diagramContainer.is-empty::before,
+    #diagramContainer.is-empty::after {
+      opacity: 0.5;
+    }
+    .diagram-hint {
+      position: absolute;
+      top: 1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(252, 230, 233, 0.92);
+      color: var(--navy);
+      padding: 0.6rem 1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      box-shadow: 0 12px 24px rgba(230, 57, 70, 0.2);
+      border: 1px solid rgba(230, 57, 70, 0.35);
+      pointer-events: none;
+      z-index: 2;
+      transition: opacity 0.3s ease;
+    }
+    .diagram-hint strong {
+      color: var(--accent-red-dark);
+    }
+    #diagramContainer:not(.is-empty) .diagram-hint {
+      opacity: 0;
     }
     .force-arrow {
       position: absolute;
       display: flex;
       align-items: center;
       justify-content: center;
-      background-color: #3c8dad;
+      background: linear-gradient(135deg, var(--accent-red), var(--navy));
       color: #fff;
       border-radius: 50%;
       cursor: grab;
       user-select: none;
       font-size: 0.8rem;
       font-weight: 700;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      /* Default size (will be updated based on intensity) */
-      width: 40px;
-      height: 40px;
+      box-shadow: 0 14px 24px rgba(230, 57, 70, 0.4);
+      border: 3px solid rgba(255, 255, 255, 0.7);
+      width: 48px;
+      height: 48px;
+      z-index: 3;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
     }
-    .force-arrow:active {
+    .force-arrow.dragging {
       cursor: grabbing;
+      transform: scale(1.08);
+      box-shadow: 0 22px 36px rgba(230, 57, 70, 0.45);
+    }
+    .force-arrow.force-arrow--pop {
+      animation: pop-in 0.4s ease;
+    }
+    @keyframes pop-in {
+      0% {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      80% {
+        transform: scale(1.05);
+        opacity: 1;
+      }
+      100% {
+        transform: scale(1);
+      }
     }
     /* Points and Calculation section */
     .points-container {
@@ -158,34 +381,188 @@
       max-width: 800px;
     }
     .points-box {
-      background-color: #fff;
-      border: 1px solid #eee;
-      padding: 1rem;
-      border-radius: 8px;
+      background: linear-gradient(160deg, #ffffff, rgba(252, 230, 233, 0.65));
+      border: 1px solid rgba(230, 57, 70, 0.2);
+      padding: 1.2rem 1rem;
+      border-radius: 14px;
       text-align: center;
       flex: 1;
+      box-shadow: 0 18px 36px rgba(230, 57, 70, 0.15);
+    }
+    #pointsDisplay {
+      color: var(--accent-red-dark);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    #badgesDisplay {
+      color: var(--soft-slate);
+    }
+    .points-box #netForceDisplay {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1.1rem;
+      margin-top: 0.3rem;
+      display: block;
+      color: var(--accent-red);
+      font-weight: 700;
+    }
+    .force-form .form-text {
+      font-size: 0.75rem;
+    }
+    .form-control:focus,
+    .form-select:focus,
+    .form-range:focus {
+      border-color: var(--accent-red);
+      box-shadow: 0 0 0 0.2rem rgba(230, 57, 70, 0.25);
+    }
+    .form-range::-webkit-slider-thumb {
+      background-color: var(--accent-red);
+      box-shadow: 0 0 0 2px #fff;
+    }
+    .form-range::-moz-range-thumb {
+      background-color: var(--accent-red);
+      border: 2px solid #fff;
+    }
+    .form-range::-webkit-slider-runnable-track,
+    .form-range::-moz-range-track {
+      background: linear-gradient(90deg, rgba(230, 57, 70, 0.3), rgba(230, 57, 70, 0.1));
+    }
+    .force-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .force-list .empty-state {
+      background: rgba(252, 230, 233, 0.7);
+      border-radius: 12px;
+      padding: 1.1rem;
+      text-align: center;
+      color: var(--soft-slate);
+      font-size: 0.9rem;
+      border: 1px dashed rgba(230, 57, 70, 0.45);
+    }
+    .force-item {
+      background: linear-gradient(130deg, rgba(255, 255, 255, 0.95), rgba(252, 230, 233, 0.7));
+      border: 1px solid rgba(230, 57, 70, 0.2);
+      border-radius: 16px;
+      padding: 0.95rem 1.1rem;
+      display: flex;
+      gap: 0.9rem;
+      align-items: flex-start;
+      justify-content: space-between;
+      transition: border 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+      box-shadow: 0 16px 30px rgba(31, 42, 68, 0.08);
+    }
+    .force-item:hover {
+      border-color: rgba(230, 57, 70, 0.45);
+      box-shadow: 0 20px 36px rgba(230, 57, 70, 0.18);
+      transform: translateY(-2px);
+    }
+    .force-item h6 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+      color: var(--navy);
+    }
+    .force-item .force-meta {
+      font-size: 0.82rem;
+      color: var(--soft-slate);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .force-item-actions button {
+      min-width: 110px;
+    }
+    .force-item .intensity-track {
+      position: relative;
+      width: 120px;
+      height: 6px;
+      background: rgba(230, 57, 70, 0.2);
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .force-item .intensity-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: linear-gradient(90deg, rgba(230, 57, 70, 0.2), var(--accent-red));
+    }
+    .alias-badge {
+      background: rgba(230, 57, 70, 0.16);
+      color: var(--accent-red-dark);
+      border-radius: 999px;
+      padding: 0.25rem 0.65rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+    .badge-interior {
+      background: rgba(87, 204, 153, 0.22);
+      color: #147d49;
+    }
+    .badge-exterior {
+      background: rgba(230, 57, 70, 0.18);
+      color: var(--accent-red-dark);
+    }
+    .clear-diagram-btn {
+      color: var(--accent-red);
+      font-weight: 600;
+    }
+    .clear-diagram-btn:hover,
+    .clear-diagram-btn:focus-visible {
+      color: var(--accent-red-dark);
+    }
+    .clear-diagram-btn:disabled {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    @media (max-width: 576px) {
+      .force-item {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .force-item-actions {
+        width: 100%;
+        flex-direction: row !important;
+        justify-content: flex-end;
+      }
+      .force-item-actions button {
+        flex: 1;
+      }
     }
     .points-box h5 {
       font-family: 'Montserrat', sans-serif;
       margin-bottom: 0.5rem;
+      color: var(--accent-red-dark);
     }
     .calculate-btn {
       margin-top: 1rem;
-      background-color: #1f2a44;
+      background: linear-gradient(135deg, var(--accent-red), var(--accent-red-dark));
       color: #fff;
       border: none;
-      padding: 0.8rem 1.2rem;
-      border-radius: 4px;
+      padding: 0.85rem 1.6rem;
+      border-radius: 999px;
       font-weight: 700;
+      box-shadow: 0 16px 30px rgba(230, 57, 70, 0.25);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .calculate-btn:hover,
+    .calculate-btn:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 20px 36px rgba(230, 57, 70, 0.32);
+      color: #fff;
     }
     /* Footer */
     footer {
-      background-color: #1f2a44;
+      background: linear-gradient(135deg, var(--navy), var(--accent-red-dark));
       color: #fff;
       padding: 1rem 2rem;
       text-align: center;
       font-size: 0.9rem;
       margin-top: 2rem;
+      box-shadow: 0 -8px 22px rgba(230, 57, 70, 0.18);
     }
   </style>
 </head>
@@ -246,9 +623,74 @@
       When ready, click “Calculate Net Force” to process your efforts.
     </p>
     <div class="text-center">
-      <button class="btn btn-primary" onclick="addForce()">+ Add Force</button>
+      <button class="btn btn-gradient-red px-4 py-2" type="button" id="jumpToAddForce">+ New Force</button>
     </div>
-    <div id="diagramContainer"></div>
+    <div class="diagram-layout">
+      <aside class="control-panel">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h3 class="panel-title">Add a force</h3>
+            <p class="text-muted small">
+              Choose the force type and intensity, then place it on the diagram to visualize its impact.
+            </p>
+            <form id="addForceForm" class="force-form">
+              <div class="mb-3">
+                <label for="forceLabel" class="form-label">Label</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="forceLabel"
+                  placeholder="e.g., Talent retention"
+                  maxlength="40"
+                />
+                <div class="form-text">Optional. A default label will be assigned if left blank.</div>
+              </div>
+              <div class="mb-3">
+                <label for="forceType" class="form-label">Force type</label>
+                <select class="form-select" id="forceType">
+                  <option value="interior">Interior (X axis)</option>
+                  <option value="exterior">Exterior (Y axis)</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label for="forceIntensity" class="form-label">Intensity: <span id="intensityValue">5</span></label>
+                <input type="range" class="form-range" min="1" max="10" value="5" id="forceIntensity" />
+                <div class="d-flex justify-content-between small text-muted">
+                  <span>Low</span>
+                  <span>High</span>
+                </div>
+              </div>
+              <button class="btn btn-gradient-red w-100 py-2" type="submit">Place force on diagram</button>
+            </form>
+          </div>
+        </div>
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <h3 class="panel-title mb-0">Your forces</h3>
+              <button class="btn btn-link btn-sm text-decoration-none clear-diagram-btn" type="button" id="clearForcesBtn">
+                Clear diagram
+              </button>
+            </div>
+            <p class="text-muted small mb-3">
+              Drag each arrow relative to the crosshair to show whether it drives momentum or creates resistance.
+            </p>
+            <ul class="force-list list-unstyled mb-0" id="forceList"></ul>
+          </div>
+        </div>
+      </aside>
+      <div class="diagram-area">
+        <div class="diagram-toolbar">
+          <strong>Tip:</strong> Interior forces move along the X axis; exterior forces along the Y axis. Place arrows past the
+          crosshair to mark supportive pushes and on the opposite side to show resistance.
+        </div>
+        <div id="diagramContainer" class="is-empty" aria-live="polite">
+          <div class="diagram-hint">
+            <strong>Start here:</strong> Use the form to add a force, then drag it to its position on the board.
+          </div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <!-- POINTS / CALCULATION SECTION -->
@@ -263,7 +705,7 @@
     </div>
     <div class="points-box">
       <h5>Net Force</h5>
-      <div id="netForceDisplay">0, 0</div>
+      <div id="netForceDisplay">X: 0, Y: 0</div>
       <button class="calculate-btn" onclick="calculateNetForce()">Calculate Net Force</button>
     </div>
   </div>
@@ -275,147 +717,339 @@
 
   <!-- JAVASCRIPT -->
   <script>
-    // Global variables
-    const forces = []; // Array to hold force objects
+    const forces = [];
     let totalPoints = 0;
     let forceCount = 0;
 
-    // Update the points display
-    function updatePointsDisplay() {
-      document.getElementById('pointsDisplay').textContent = totalPoints;
+    const addForceForm = document.getElementById('addForceForm');
+    const forceLabelInput = document.getElementById('forceLabel');
+    const forceTypeSelect = document.getElementById('forceType');
+    const forceIntensityInput = document.getElementById('forceIntensity');
+    const intensityValue = document.getElementById('intensityValue');
+    const forceListEl = document.getElementById('forceList');
+    const clearForcesBtn = document.getElementById('clearForcesBtn');
+    const jumpToAddForceBtn = document.getElementById('jumpToAddForce');
+    const diagramContainer = document.getElementById('diagramContainer');
+    const netForceDisplay = document.getElementById('netForceDisplay');
+
+    if (forceIntensityInput && intensityValue) {
+      intensityValue.textContent = forceIntensityInput.value;
+      forceIntensityInput.addEventListener('input', (event) => {
+        intensityValue.textContent = event.target.value;
+      });
     }
 
-    // Update badges based on how many forces have been added
+    if (addForceForm) {
+      addForceForm.addEventListener('submit', handleAddForce);
+    }
+
+    if (clearForcesBtn) {
+      clearForcesBtn.addEventListener('click', clearForces);
+    }
+
+    if (jumpToAddForceBtn) {
+      jumpToAddForceBtn.addEventListener('click', () => {
+        if (forceLabelInput) {
+          forceLabelInput.focus();
+          forceLabelInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      });
+    }
+
+    renderForceList();
+    updateBadges();
+    updatePointsDisplay();
+
+    function updatePointsDisplay() {
+      const pointsDisplay = document.getElementById('pointsDisplay');
+      if (pointsDisplay) {
+        pointsDisplay.textContent = totalPoints;
+      }
+    }
+
     function updateBadges() {
+      const badgesDisplay = document.getElementById('badgesDisplay');
+      if (!badgesDisplay) return;
       let badgeText = 'No badges yet';
       if (forces.length >= 5 && forces.length < 10) {
         badgeText = 'Force Finder Badge';
       } else if (forces.length >= 10) {
         badgeText = 'Vector Visionary Badge';
       }
-      document.getElementById('badgesDisplay').textContent = badgeText;
+      badgesDisplay.textContent = badgeText;
     }
 
-    // Add a new force (with type and intensity)
-    function addForce() {
-      // Increase points for adding a force
-      totalPoints += 10;
-      updatePointsDisplay();
-
-      // Prompt user for force type and intensity
-      let forceType = prompt("Enter force type: interior (X axis) or exterior (Y axis):", "interior");
-      if (!forceType || (forceType.toLowerCase() !== "interior" && forceType.toLowerCase() !== "exterior")) {
-        forceType = "interior";
-      } else {
-        forceType = forceType.toLowerCase();
-      }
-      let intensity = prompt("Enter force intensity (1 to 10):", "5");
-      intensity = parseInt(intensity);
-      if (isNaN(intensity) || intensity < 1 || intensity > 10) {
-        intensity = 5;
+    function handleAddForce(event) {
+      event.preventDefault();
+      if (!diagramContainer || !forceTypeSelect || !forceIntensityInput) {
+        return;
       }
 
-      // Increase force count and create a new label
-      forceCount++;
-      const label = "F" + forceCount + (forceType === "interior" ? " (X)" : " (Y)");
+      const type = forceTypeSelect.value;
+      const intensity = parseInt(forceIntensityInput.value, 10) || 5;
+      let labelText = forceLabelInput ? forceLabelInput.value.trim() : '';
 
-      // Determine arrow size based on intensity (for visual impact)
-      const size = 30 + intensity * 2; // e.g., 32px to 50px
+      forceCount += 1;
+      const descriptiveLabel = labelText || `Force ${forceCount}`;
+      const arrowLabel = `F${forceCount}`;
+      const size = 42 + intensity * 2;
 
-      // Create the arrow element
-      const diagramContainer = document.getElementById('diagramContainer');
       const arrow = document.createElement('div');
-      arrow.className = 'force-arrow';
-      arrow.textContent = label;
-      arrow.style.width = size + 'px';
-      arrow.style.height = size + 'px';
+      arrow.className = 'force-arrow force-arrow--pop';
+      arrow.textContent = arrowLabel;
+      arrow.dataset.forceType = type;
+      arrow.setAttribute('tabindex', '0');
+      arrow.setAttribute('role', 'button');
+      arrow.setAttribute(
+        'aria-label',
+        `${descriptiveLabel} ${type === 'interior' ? 'interior' : 'exterior'} force with intensity ${intensity}`
+      );
+      arrow.style.width = `${size}px`;
+      arrow.style.height = `${size}px`;
 
-      // Position arrow randomly within the container
-      arrow.style.left = Math.floor(Math.random() * (diagramContainer.offsetWidth - size)) + 'px';
-      arrow.style.top = Math.floor(Math.random() * (diagramContainer.offsetHeight - size)) + 'px';
+      const maxX = Math.max(diagramContainer.offsetWidth - size, 0);
+      const maxY = Math.max(diagramContainer.offsetHeight - size, 0);
+      const baseX = clamp(diagramContainer.offsetWidth / 2 - size / 2 + (Math.random() * 120 - 60), 0, maxX);
+      const baseY = clamp(diagramContainer.offsetHeight / 2 - size / 2 + (Math.random() * 120 - 60), 0, maxY);
+      arrow.style.left = `${baseX}px`;
+      arrow.style.top = `${baseY}px`;
 
-      // Create a force object to store data
+      diagramContainer.appendChild(arrow);
+
+      const forceId = `force-${forceCount}-${Date.now()}`;
       const forceData = {
+        id: forceId,
         el: arrow,
-        type: forceType,      // "interior" or "exterior"
-        intensity: intensity, // user-specified intensity (1–10)
-        x: parseInt(arrow.style.left),
-        y: parseInt(arrow.style.top)
+        type,
+        intensity,
+        x: baseX,
+        y: baseY,
+        label: descriptiveLabel,
+        alias: arrowLabel
       };
+      arrow.dataset.forceId = forceId;
       forces.push(forceData);
 
-      // Make the arrow draggable
       makeDraggable(arrow, forceData);
-      diagramContainer.appendChild(arrow);
+
+      setTimeout(() => {
+        arrow.classList.remove('force-arrow--pop');
+      }, 500);
+
+      totalPoints += 10;
+      updatePointsDisplay();
       updateBadges();
+      renderForceList();
+
+      if (forceLabelInput) {
+        forceLabelInput.value = '';
+        forceLabelInput.focus();
+      }
     }
 
-    // Basic draggable functionality
+    function renderForceList() {
+      if (!forceListEl) return;
+      forceListEl.innerHTML = '';
+
+      if (forces.length === 0) {
+        const emptyItem = document.createElement('li');
+        emptyItem.className = 'empty-state';
+        emptyItem.textContent = 'No forces yet. Use the form to add one.';
+        forceListEl.appendChild(emptyItem);
+        if (clearForcesBtn) {
+          clearForcesBtn.disabled = true;
+        }
+      } else {
+        if (clearForcesBtn) {
+          clearForcesBtn.disabled = false;
+        }
+
+        forces.forEach((force) => {
+          const item = document.createElement('li');
+          item.className = 'force-item';
+
+          const infoWrapper = document.createElement('div');
+          const title = document.createElement('h6');
+          const aliasBadge = document.createElement('span');
+          aliasBadge.className = 'badge alias-badge me-2';
+          aliasBadge.textContent = force.alias;
+          title.appendChild(aliasBadge);
+          const titleText = document.createElement('span');
+          titleText.textContent = force.label;
+          title.appendChild(titleText);
+          infoWrapper.appendChild(title);
+
+          const meta = document.createElement('div');
+          meta.className = 'force-meta';
+
+          const typeBadge = document.createElement('span');
+          typeBadge.className = `badge ${force.type === 'interior' ? 'badge-interior' : 'badge-exterior'}`;
+          typeBadge.textContent = force.type === 'interior' ? 'Interior' : 'Exterior';
+          meta.appendChild(typeBadge);
+
+          const intensityLabel = document.createElement('span');
+          intensityLabel.textContent = `Intensity ${force.intensity}/10`;
+          meta.appendChild(intensityLabel);
+
+          const intensityTrack = document.createElement('div');
+          intensityTrack.className = 'intensity-track';
+          const intensityFill = document.createElement('div');
+          intensityFill.className = 'intensity-fill';
+          intensityFill.style.width = `${(force.intensity / 10) * 100}%`;
+          intensityTrack.appendChild(intensityFill);
+          meta.appendChild(intensityTrack);
+
+          infoWrapper.appendChild(meta);
+          item.appendChild(infoWrapper);
+
+          const actions = document.createElement('div');
+          actions.className = 'force-item-actions d-flex flex-column gap-2 align-items-end';
+
+          const locateButton = document.createElement('button');
+          locateButton.type = 'button';
+          locateButton.className = 'btn btn-outline-crimson btn-sm';
+          locateButton.textContent = 'Locate';
+          locateButton.addEventListener('click', () => focusForce(force.id));
+          actions.appendChild(locateButton);
+
+          const removeButton = document.createElement('button');
+          removeButton.type = 'button';
+          removeButton.className = 'btn btn-soft-slate btn-sm';
+          removeButton.textContent = 'Remove';
+          removeButton.addEventListener('click', () => removeForce(force.id));
+          actions.appendChild(removeButton);
+
+          item.appendChild(actions);
+          forceListEl.appendChild(item);
+        });
+      }
+
+      setDiagramEmptyState();
+    }
+
+    function removeForce(forceId) {
+      const index = forces.findIndex((f) => f.id === forceId);
+      if (index === -1) return;
+      const [removedForce] = forces.splice(index, 1);
+      removedForce.el.remove();
+      updateBadges();
+      renderForceList();
+    }
+
+    function clearForces() {
+      while (forces.length > 0) {
+        const force = forces.pop();
+        force.el.remove();
+      }
+      updateBadges();
+      renderForceList();
+      if (netForceDisplay) {
+        netForceDisplay.textContent = 'X: 0, Y: 0';
+      }
+    }
+
+    function focusForce(forceId) {
+      if (!diagramContainer) return;
+      const force = forces.find((f) => f.id === forceId);
+      if (!force) return;
+      diagramContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      force.el.classList.add('force-arrow--pop');
+      force.el.focus();
+      setTimeout(() => {
+        force.el.classList.remove('force-arrow--pop');
+      }, 600);
+    }
+
+    function setDiagramEmptyState() {
+      if (!diagramContainer) return;
+      diagramContainer.classList.toggle('is-empty', forces.length === 0);
+    }
+
     function makeDraggable(element, forceData) {
-      let offsetX, offsetY;
-      let isDragging = false;
-      element.addEventListener('mousedown', (e) => {
-        isDragging = true;
-        offsetX = e.clientX - forceData.x;
-        offsetY = e.clientY - forceData.y;
+      if (!diagramContainer) return;
+      let offsetX = 0;
+      let offsetY = 0;
+
+      function startDrag(event) {
+        const { x, y } = getClientPosition(event);
+        offsetX = x - forceData.x;
+        offsetY = y - forceData.y;
+        element.classList.add('dragging');
         element.style.cursor = 'grabbing';
-      });
-      document.addEventListener('mousemove', (e) => {
-        if (isDragging) {
-          let newX = e.clientX - offsetX;
-          let newY = e.clientY - offsetY;
-          // Constrain movement within the container
-          const container = document.getElementById('diagramContainer');
-          const maxX = container.offsetWidth - element.offsetWidth;
-          const maxY = container.offsetHeight - element.offsetHeight;
-          if (newX < 0) newX = 0;
-          if (newY < 0) newY = 0;
-          if (newX > maxX) newX = maxX;
-          if (newY > maxY) newY = maxY;
-          forceData.x = newX;
-          forceData.y = newY;
-          element.style.left = newX + 'px';
-          element.style.top = newY + 'px';
-        }
-      });
-      document.addEventListener('mouseup', () => {
-        isDragging = false;
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', endDrag);
+        document.addEventListener('touchmove', onMove, { passive: false });
+        document.addEventListener('touchend', endDrag);
+        event.preventDefault();
+      }
+
+      function onMove(event) {
+        const { x, y } = getClientPosition(event);
+        let newX = x - offsetX;
+        let newY = y - offsetY;
+
+        const maxX = diagramContainer.offsetWidth - element.offsetWidth;
+        const maxY = diagramContainer.offsetHeight - element.offsetHeight;
+        newX = clamp(newX, 0, maxX);
+        newY = clamp(newY, 0, maxY);
+
+        forceData.x = newX;
+        forceData.y = newY;
+        element.style.left = `${newX}px`;
+        element.style.top = `${newY}px`;
+        event.preventDefault();
+      }
+
+      function endDrag() {
+        element.classList.remove('dragging');
         element.style.cursor = 'grab';
-      });
+        document.removeEventListener('mousemove', onMove);
+        document.removeEventListener('mouseup', endDrag);
+        document.removeEventListener('touchmove', onMove);
+        document.removeEventListener('touchend', endDrag);
+      }
+
+      element.addEventListener('mousedown', startDrag);
+      element.addEventListener('touchstart', startDrag, { passive: false });
     }
 
-    // Calculate the net force based on each force’s type, intensity, and position
+    function getClientPosition(event) {
+      if (event.touches && event.touches.length > 0) {
+        return { x: event.touches[0].clientX, y: event.touches[0].clientY };
+      }
+      return { x: event.clientX, y: event.clientY };
+    }
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
     function calculateNetForce() {
-      // Get the container's center coordinates
-      const container = document.getElementById('diagramContainer');
-      const centerX = container.offsetWidth / 2;
-      const centerY = container.offsetHeight / 2;
+      if (!diagramContainer || !netForceDisplay) return;
+      const centerX = diagramContainer.offsetWidth / 2;
+      const centerY = diagramContainer.offsetHeight / 2;
 
-      let netInterior = 0; // Sum for interior (X axis) forces
-      let netExterior = 0; // Sum for exterior (Y axis) forces
+      let netInterior = 0;
+      let netExterior = 0;
 
-      forces.forEach((f) => {
-        // Calculate the arrow's center position
-        const arrowCenterX = f.x + f.el.offsetWidth / 2;
-        const arrowCenterY = f.y + f.el.offsetHeight / 2;
-        if (f.type === "interior") {
-          // If arrow is right of center, count as positive; left, negative.
-          netInterior += (arrowCenterX >= centerX ? f.intensity : -f.intensity);
-        } else if (f.type === "exterior") {
-          // If arrow is below center, count as positive; above, negative.
-          netExterior += (arrowCenterY >= centerY ? f.intensity : -f.intensity);
+      forces.forEach((force) => {
+        const arrowCenterX = force.x + force.el.offsetWidth / 2;
+        const arrowCenterY = force.y + force.el.offsetHeight / 2;
+
+        if (force.type === 'interior') {
+          netInterior += arrowCenterX >= centerX ? force.intensity : -force.intensity;
+        } else if (force.type === 'exterior') {
+          netExterior += arrowCenterY >= centerY ? force.intensity : -force.intensity;
         }
       });
 
-      // Display the net force as an (X, Y) pair
-      document.getElementById('netForceDisplay').textContent = netInterior + ", " + netExterior;
-
-      // Reward points for processing the forces
+      netForceDisplay.textContent = `X: ${netInterior}, Y: ${netExterior}`;
       totalPoints += 5;
       updatePointsDisplay();
     }
 
-    // Set the current year in the footer
+    window.calculateNetForce = calculateNetForce;
+
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
 
