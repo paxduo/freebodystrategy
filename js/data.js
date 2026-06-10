@@ -336,70 +336,17 @@ const BOND_CHECKLIST = {
   ]
 };
 
-// ---------- Demo data: cases (family portal + attorney dashboard) ----------
-// PROTOTYPE ONLY — synthetic people. Production must apply data minimization:
-// no nationality/status data stored without encryption, consent, and a
-// litigation-hold/subpoena response policy.
-const DEMO_CASES = [
-  {
-    caseCode: "LN-2026-0417",
-    firstName: "Carlos M.",
-    facility: { en: "Processing Center — Unit B", es: "Centro de Procesamiento — Unidad B" },
-    stage: 2,
-    nextDate: "2026-06-24",
-    bondStatus: { en: "Bond hearing requested — evidence packet 80% complete", es: "Audiencia de fianza solicitada — paquete de evidencia 80% completo" },
-    stages: [
-      { en: "Detained / case opened", es: "Detención / caso abierto" },
-      { en: "Bond or parole request", es: "Solicitud de fianza o parole" },
-      { en: "Master calendar hearing", es: "Audiencia preliminar (master)" },
-      { en: "Individual (merits) hearing", es: "Audiencia individual (de fondo)" },
-      { en: "Decision / appeal", es: "Decisión / apelación" }
-    ]
-  },
-  {
-    caseCode: "LN-2026-0533",
-    firstName: "Rosa T.",
-    facility: { en: "Released on bond — with family", es: "Libre bajo fianza — con su familia" },
-    stage: 3,
-    nextDate: "2026-08-12",
-    bondStatus: { en: "RELEASED on $4,000 bond 🎉 — preparing cancellation case", es: "LIBERADA con fianza de $4,000 🎉 — preparando caso de cancelación" },
-    stages: [
-      { en: "Detained / case opened", es: "Detención / caso abierto" },
-      { en: "Bond granted — released", es: "Fianza otorgada — liberada" },
-      { en: "Master calendar hearing", es: "Audiencia preliminar (master)" },
-      { en: "Individual (merits) hearing", es: "Audiencia individual (de fondo)" },
-      { en: "Decision / appeal", es: "Decisión / apelación" }
-    ]
-  }
+// ---------- Standard case stages (family portal timeline) ----------
+const CASE_STAGES = [
+  { en: "Detained / case opened", es: "Detención / caso abierto" },
+  { en: "Bond or parole request", es: "Solicitud de fianza o parole" },
+  { en: "Master calendar hearing", es: "Audiencia preliminar (master)" },
+  { en: "Individual (merits) hearing", es: "Audiencia individual (de fondo)" },
+  { en: "Decision / appeal", es: "Decisión / apelación" }
 ];
 
-// Attorney review queue (seed data; persisted in localStorage in the prototype)
-const SEED_REVIEW_QUEUE = [
-  {
-    id: "REV-1001",
-    caseCode: "LN-2026-0417",
-    module: "Mi Defensa",
-    summary: { en: "Screener flagged: 10-yr cancellation (strong), motion to suppress (strong), PD request (maybe)", es: "Resultados: cancelación de 10 años (fuerte), moción de supresión (fuerte), discreción fiscal (posible)" },
-    status: "pending",
-    attorney: null,
-    signedAt: null
-  },
-  {
-    id: "REV-1002",
-    caseCode: "LN-2026-0533",
-    module: "Libertad",
-    summary: { en: "Bond packet checklist + § 236(a) hearing request guidance", es: "Paquete de fianza + guía de audiencia § 236(a)" },
-    status: "approved",
-    attorney: "Prof. A. Ayala, Esq.",
-    signedAt: "2026-06-02"
-  },
-  {
-    id: "REV-1003",
-    caseCode: "LN-2026-0601",
-    module: "Mi Defensa",
-    summary: { en: "Screener flagged: asylum/withholding/CAT (strong), TPS (maybe)", es: "Resultados: asilo/retención/CAT (fuerte), TPS (posible)" },
-    status: "pending",
-    attorney: null,
-    signedAt: null
-  }
-];
+// Allow the Node server to reuse the exact same content and matching rules
+// the browser uses (single source of truth for legal-content versioning).
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { RIGHTS_CARDS, SCREENER_QUESTIONS, RELIEF_OPTIONS, BOND_PATHS, BOND_CHECKLIST, CASE_STAGES };
+}
