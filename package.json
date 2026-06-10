@@ -1,0 +1,16 @@
+{
+  "name": "librenow",
+  "version": "1.0.0",
+  "description": "LibreNow — bilingual deportation-defense platform with attorney sign-off (Defensa. Familia. Libertad.)",
+  "private": true,
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "demo": "node server.js --demo",
+    "test": "node test/e2e.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "UNLICENSED"
+}
