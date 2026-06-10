@@ -1,0 +1,26 @@
+# Render blueprint — deploy LibreNow with one click ("New + → Blueprint")
+# after connecting the GitHub repo. Persistent disk keeps the encrypted
+# case store across deploys; LIBRENOW_SECRET is generated once by Render.
+services:
+  - type: web
+    name: librenow
+    runtime: node
+    plan: starter
+    buildCommand: ""
+    startCommand: node server.js
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: LIBRENOW_SECRET
+        generateValue: true
+      - key: LIBRENOW_DATA_DIR
+        value: /var/data
+      - key: ADMIN_EMAIL
+        sync: false # set this in the Render dashboard
+      - key: ADMIN_PASSWORD
+        sync: false # set this in the Render dashboard
+    disk:
+      name: librenow-data
+      mountPath: /var/data
+      sizeGB: 1
