@@ -1,0 +1,15 @@
+{
+  // Cloudflare Workers config for the Elephant Trail Operations site.
+  // Deploy from this directory with: npx wrangler deploy
+  // After the domain is registered on Cloudflare, uncomment the routes
+  // block below and redeploy to serve it at elephanttrailoperations.com.
+  "name": "elephanttrailoperations",
+  "compatibility_date": "2026-07-11",
+  "assets": {
+    "directory": "./public"
+  }
+  // ,"routes": [
+  //   { "pattern": "elephanttrailoperations.com", "custom_domain": true },
+  //   { "pattern": "www.elephanttrailoperations.com", "custom_domain": true }
+  // ]
+}
